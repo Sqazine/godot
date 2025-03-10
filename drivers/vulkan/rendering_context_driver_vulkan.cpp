@@ -544,6 +544,10 @@ Error RenderingContextDriverVulkan::_find_validation_layers(TightLocalVector<con
 		}
 	}
 
+	#ifdef _WIN32 || __APPLE__ || __linux__ 
+		r_layer_names.push_back("VK_LAYER_LUNARG_monitor");
+	#endif
+	
 	return OK;
 }
 
