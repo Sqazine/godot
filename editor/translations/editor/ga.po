@@ -1409,6 +1409,9 @@ msgstr "Argóintí Comhartha Unbind:"
 msgid "Receiver Method:"
 msgstr "Modh glacadóra:"
 
+msgid "Pick"
+msgstr "Pioc"
+
 msgid "Advanced"
 msgstr "Ardrang"
 
@@ -4757,6 +4760,9 @@ msgstr "Suiteáil ó Chomhad"
 msgid "Install templates from a local file."
 msgstr "Suiteáil teimpléid ó chomhad logánta."
 
+msgid "Go Online"
+msgstr "Téigh Ar Líne"
+
 msgid "Cancel the download of the templates."
 msgstr "Cealaigh íoslódáil na dteimpléad."
 
@@ -7283,9 +7289,6 @@ msgid ""
 msgstr ""
 "Teastaíonn nasc ar líne ón Leabharlann Sócmhainní agus is éard atá i gceist "
 "léi ná sonraí a sheoladh ar an idirlíon."
-
-msgid "Go Online"
-msgstr "Téigh Ar Líne"
 
 msgid "Failed to get repository configuration."
 msgstr "Theip ar chumraíocht an stóir a fháil."
@@ -14408,9 +14411,6 @@ msgstr "Clibeanna Gné"
 msgid "Pick Root Node Type"
 msgstr "Roghnaigh Cineál Nód Fréimhe"
 
-msgid "Pick"
-msgstr "Pioc"
-
 msgid "Scene name is empty."
 msgstr "Tá ainm an radhairc folamh."
 
@@ -16141,12 +16141,6 @@ msgid ""
 msgstr ""
 "Níor aimsíodh leabharlann teimpléid '%s' iarrtha. D'fhéadfadh sé a bheith ar "
 "iarraidh ó do chartlann teimpléad."
-
-msgid "ARM64 simulator library, generating from device library."
-msgstr "Leabharlann Insamhlóir ARM64, a ghineann ó leabharlann gléas."
-
-msgid "Unable to generate ARM64 simulator library."
-msgstr "Ní féidir leabharlann Insamhlóir ARM64 a ghiniúint."
 
 msgid "Could not copy a file at path \"%s\" to \"%s\"."
 msgstr "Níorbh fhéidir comhad a chóipeáil ag conair \"%s\" go \"%s\"."
@@ -17998,9 +17992,6 @@ msgstr "Ní féidir réad den chineál '%s' a innéacsú."
 
 msgid "Invalid base type for increment/decrement operator."
 msgstr "Cineál bonn neamhbhailí le haghaidh oibreora incrimint/laghdaithe."
-
-msgid "Invalid use of increment/decrement operator in a constant expression."
-msgstr "Úsáid neamhbhailí oibritheora incrimint/laghdaithe i slonn tairiseach."
 
 msgid "Invalid token for the operator: '%s'."
 msgstr "Comhartha neamhbhailí don oibreoir: '%s'."

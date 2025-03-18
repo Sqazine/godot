@@ -28,8 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef RICH_TEXT_LABEL_H
-#define RICH_TEXT_LABEL_H
+#pragma once
 
 #include "core/object/worker_thread_pool.h"
 #include "core/templates/rid_owner.h"
@@ -45,6 +44,7 @@ class RichTextLabel : public Control {
 
 	enum RTLDrawStep {
 		DRAW_STEP_BACKGROUND,
+		DRAW_STEP_SHADOW_OUTLINE,
 		DRAW_STEP_SHADOW,
 		DRAW_STEP_OUTLINE,
 		DRAW_STEP_TEXT,
@@ -881,6 +881,7 @@ public:
 	Array get_effects();
 
 	void install_effect(const Variant effect);
+	void reload_effects();
 
 	virtual Size2 get_minimum_size() const override;
 
@@ -892,5 +893,3 @@ VARIANT_ENUM_CAST(RichTextLabel::ListType);
 VARIANT_ENUM_CAST(RichTextLabel::MenuItems);
 VARIANT_ENUM_CAST(RichTextLabel::MetaUnderline);
 VARIANT_BITFIELD_CAST(RichTextLabel::ImageUpdateMask);
-
-#endif // RICH_TEXT_LABEL_H

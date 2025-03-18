@@ -28,8 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef BUTTON_H
-#define BUTTON_H
+#pragma once
 
 #include "scene/gui/base_button.h"
 #include "scene/resources/text_paragraph.h"
@@ -111,6 +110,7 @@ protected:
 
 	void _set_internal_margin(Side p_side, float p_value);
 	virtual void _queue_update_size_cache();
+	virtual String _get_translated_text(const String &p_text) const;
 
 	Size2 _fit_icon_size(const Size2 &p_size) const;
 	Ref<StyleBox> _get_current_stylebox() const;
@@ -161,5 +161,3 @@ public:
 	Button(const String &p_text = String());
 	~Button();
 };
-
-#endif // BUTTON_H

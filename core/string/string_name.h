@@ -28,8 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef STRING_NAME_H
-#define STRING_NAME_H
+#pragma once
 
 #include "core/os/mutex.h"
 #include "core/string/ustring.h"
@@ -220,6 +219,10 @@ public:
 #endif
 };
 
+// Zero-constructing StringName initializes _data to nullptr (and thus empty).
+template <>
+struct is_zero_constructible<StringName> : std::true_type {};
+
 bool operator==(const String &p_name, const StringName &p_string_name);
 bool operator!=(const String &p_name, const StringName &p_string_name);
 bool operator==(const char *p_name, const StringName &p_string_name);
@@ -240,5 +243,3 @@ StringName _scs_create(const char *p_chr, bool p_static = false);
  */
 
 #define SNAME(m_arg) ([]() -> const StringName & { static StringName sname = _scs_create(m_arg, true); return sname; })()
-
-#endif // STRING_NAME_H

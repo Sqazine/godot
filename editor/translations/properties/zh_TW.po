@@ -748,9 +748,6 @@ msgstr "要求失敗，逾時"
 msgid "Sync Breakpoints"
 msgstr "同步中斷點"
 
-msgid "Default Feature Profile"
-msgstr "預設功能設定檔"
-
 msgid "Label"
 msgstr "標籤"
 
@@ -871,6 +868,9 @@ msgstr "在 Toast 通知中顯示內部錯誤"
 msgid "Show Update Spinner"
 msgstr "顯示更新旋轉圖"
 
+msgid "V-Sync Mode"
+msgstr "垂直同步模式"
+
 msgid "Update Continuously"
 msgstr "持續更新"
 
@@ -924,6 +924,9 @@ msgstr "主題"
 
 msgid "Icon and Font Color"
 msgstr "圖示及字體顏色"
+
+msgid "Contrast"
+msgstr "對比度"
 
 msgid "Draw Extra Borders"
 msgstr "繪製額外邊框"
@@ -1065,6 +1068,9 @@ msgstr "文字編輯器"
 
 msgid "Line Spacing"
 msgstr "行間距"
+
+msgid "Color Theme"
+msgstr "顏色主題"
 
 msgid "Appearance"
 msgstr "外觀"
@@ -1531,9 +1537,6 @@ msgstr "載入時恢復著色器"
 msgid "Visual Editors"
 msgstr "視覺化編輯器"
 
-msgid "Color Theme"
-msgstr "顏色主題"
-
 msgid "Minimap Opacity"
 msgstr "迷你地圖不透明度"
 
@@ -1558,8 +1561,14 @@ msgstr "SCP"
 msgid "Window Placement"
 msgstr "視窗擺放"
 
+msgid "Rect"
+msgstr "矩形"
+
 msgid "Rect Custom Position"
 msgstr "矩形自定義位置"
+
+msgid "Screen"
+msgstr "螢幕"
 
 msgid "Auto Save"
 msgstr "自動保存"
@@ -1569,6 +1578,9 @@ msgstr "執行前儲存"
 
 msgid "Output"
 msgstr "輸出"
+
+msgid "Font Size"
+msgstr "字體大小"
 
 msgid "Always Clear Output on Play"
 msgstr "執行時永遠清除輸出"
@@ -2338,9 +2350,6 @@ msgstr "外掛名稱"
 msgid "Autoload on Startup"
 msgstr "啟動時自動載入"
 
-msgid "Use Favorites Root Selection"
-msgstr "使用我的最愛根選擇"
-
 msgid "Flush stdout on Print"
 msgstr "列印時刷新標準輸出"
 
@@ -2424,9 +2433,6 @@ msgstr "掌上型"
 
 msgid "Orientation"
 msgstr "朝向"
-
-msgid "V-Sync Mode"
-msgstr "垂直同步模式"
 
 msgid "Output Latency"
 msgstr "輸出延遲"
@@ -2527,14 +2533,14 @@ msgstr "工具提示位置偏移"
 msgid "Show Image"
 msgstr "顯示圖像"
 
-msgid "Image"
-msgstr "圖像"
-
 msgid "Fullsize"
 msgstr "全尺寸"
 
 msgid "Use Filter"
 msgstr "使用篩選器"
+
+msgid "Image"
+msgstr "圖像"
 
 msgid "Minimum Display Time"
 msgstr "最短顯示時間"
@@ -3097,9 +3103,6 @@ msgstr "K1"
 msgid "K2"
 msgstr "K2"
 
-msgid "Spawnable Scenes"
-msgstr "可生成場景"
-
 msgid "Spawn Path"
 msgstr "生成路徑"
 
@@ -3435,9 +3438,6 @@ msgstr "XR 功能"
 
 msgid "XR Mode"
 msgstr "XR 模式"
-
-msgid "Screen"
-msgstr "螢幕"
 
 msgid "Immersive Mode"
 msgstr "沉浸模式"
@@ -3990,9 +3990,6 @@ msgstr "區域遮罩"
 
 msgid "Copy Mode"
 msgstr "複製模式"
-
-msgid "Rect"
-msgstr "矩形"
 
 msgid "Anchor Mode"
 msgstr "錨點模式"
@@ -5082,9 +5079,6 @@ msgstr "輪廓調變"
 
 msgid "Font"
 msgstr "字體"
-
-msgid "Font Size"
-msgstr "字體大小"
 
 msgid "Horizontal Alignment"
 msgstr "水平對齊"
@@ -6793,23 +6787,14 @@ msgstr "最大顯示接觸數"
 msgid "Draw 2D Outlines"
 msgstr "繪製 2D 輪廓"
 
-msgid "Anti Aliasing"
-msgstr "抗鋸齒"
-
-msgid "MSAA 2D"
-msgstr "MSAA 2D"
-
-msgid "MSAA 3D"
-msgstr "MSAA 3D"
-
 msgid "Viewport"
 msgstr "檢視區"
 
 msgid "Transparent Background"
 msgstr "透明背景"
 
-msgid "HDR 2D"
-msgstr "HDR 2D"
+msgid "Anti Aliasing"
+msgstr "抗鋸齒"
 
 msgid "Screen Space AA"
 msgstr "螢幕空間 AA"
@@ -6852,9 +6837,6 @@ msgstr "位置陰影"
 
 msgid "Atlas Size"
 msgstr "合集大小"
-
-msgid "Atlas 16 Bits"
-msgstr "16 點陣合集"
 
 msgid "Atlas Quadrant 0 Subdiv"
 msgstr "合集象限 0 細分"
@@ -6909,6 +6891,12 @@ msgstr "透明背景"
 
 msgid "Handle Input Locally"
 msgstr "輸入本地處理"
+
+msgid "MSAA 2D"
+msgstr "MSAA 2D"
+
+msgid "MSAA 3D"
+msgstr "MSAA 3D"
 
 msgid "Debug Draw"
 msgstr "除錯繪製"
@@ -7725,9 +7713,6 @@ msgstr "調整"
 
 msgid "Brightness"
 msgstr "亮度"
-
-msgid "Contrast"
-msgstr "對比度"
 
 msgid "Saturation"
 msgstr "飽和度"
@@ -9520,6 +9505,9 @@ msgstr "使用物理光線單位"
 msgid "Soft Shadow Filter Quality"
 msgstr "柔和陰影篩選品質"
 
+msgid "Atlas 16 Bits"
+msgstr "16 點陣合集"
+
 msgid "Shadow Atlas"
 msgstr "陰影合集"
 
@@ -9618,6 +9606,9 @@ msgstr "淡出起點"
 
 msgid "Fadeout To"
 msgstr "淡出終點"
+
+msgid "HDR 2D"
+msgstr "HDR 2D"
 
 msgid "Screen Space Roughness Limiter"
 msgstr "螢幕空間粗糙度極限器"

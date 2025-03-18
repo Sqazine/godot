@@ -28,8 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef EMBEDDED_PROCESS_H
-#define EMBEDDED_PROCESS_H
+#pragma once
 
 #include "scene/gui/control.h"
 
@@ -83,6 +82,7 @@ public:
 	void set_keep_aspect(bool p_keep_aspect);
 	void queue_update_embedded_process();
 
+	Rect2i get_adjusted_embedded_window_rect(Rect2i p_rect);
 	Rect2i get_screen_embedded_window_rect();
 	int get_margin_size(Side p_side) const;
 	Size2 get_margins_size();
@@ -93,5 +93,3 @@ public:
 	EmbeddedProcess();
 	~EmbeddedProcess();
 };
-
-#endif // EMBEDDED_PROCESS_H
