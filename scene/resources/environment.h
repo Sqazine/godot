@@ -88,6 +88,13 @@ public:
 		GLOW_BLEND_MODE_MIX,
 	};
 
+	enum AOMode
+	{
+		AO_NONE,
+		AO_SSAO,
+		AO_HBAO,
+	};
+
 private:
 	RID environment;
 
@@ -125,8 +132,10 @@ private:
 	float ssr_depth_tolerance = 0.2;
 	void _update_ssr();
 
+	AOMode ao_mode = AO_NONE;
+
 	// SSAO
-	bool ssao_enabled = false;
+	//bool ssao_enabled = false;
 	float ssao_radius = 1.0;
 	float ssao_intensity = 2.0;
 	float ssao_power = 1.5;
@@ -136,6 +145,9 @@ private:
 	float ssao_direct_light_affect = 0.0;
 	float ssao_ao_channel_affect = 0.0;
 	void _update_ssao();
+
+	// HBAO
+	bool hbao_enabled = false;
 
 	// SSIL
 	bool ssil_enabled = false;
@@ -284,9 +296,12 @@ public:
 	void set_ssr_depth_tolerance(float p_depth_tolerance);
 	float get_ssr_depth_tolerance() const;
 
+	void set_ao(AOMode p_mode);
+	AOMode get_ao();
+
 	// SSAO
-	void set_ssao_enabled(bool p_enabled);
-	bool is_ssao_enabled() const;
+	//void set_ssao_enabled(bool p_enabled);
+	//bool is_ssao_enabled() const;
 	void set_ssao_radius(float p_radius);
 	float get_ssao_radius() const;
 	void set_ssao_intensity(float p_intensity);
@@ -303,6 +318,10 @@ public:
 	float get_ssao_direct_light_affect() const;
 	void set_ssao_ao_channel_affect(float p_ao_channel_affect);
 	float get_ssao_ao_channel_affect() const;
+
+	// HBAO
+	void set_hbao_enabled(bool p_enabled);
+	bool is_hbao_enabled() const;
 
 	// SSIL
 	void set_ssil_enabled(bool p_enabled);
@@ -453,3 +472,4 @@ VARIANT_ENUM_CAST(Environment::ToneMapper)
 VARIANT_ENUM_CAST(Environment::SDFGIYScale)
 VARIANT_ENUM_CAST(Environment::GlowBlendMode)
 VARIANT_ENUM_CAST(Environment::FogMode)
+VARIANT_ENUM_CAST(Environment::AOMode)
