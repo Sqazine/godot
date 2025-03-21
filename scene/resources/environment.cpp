@@ -295,6 +295,8 @@ void Environment::_update_ssr() {
 
 void Environment::set_ao(AOMode p_mode) {
 	ao_mode = p_mode;
+	_update_ssao();
+	notify_property_list_changed();
 }
 
 Environment::AOMode Environment::get_ao() {
@@ -302,16 +304,6 @@ Environment::AOMode Environment::get_ao() {
 }
 
 // SSAO
-
-//void Environment::set_ssao_enabled(bool p_enabled) {
-//	ssao_enabled = p_enabled;
-//	_update_ssao();
-//	notify_property_list_changed();
-//}
-//
-//bool Environment::is_ssao_enabled() const {
-//	return ssao_enabled;
-//}
 
 void Environment::set_ssao_radius(float p_radius) {
 	ssao_radius = p_radius;
@@ -398,14 +390,6 @@ void Environment::_update_ssao() {
 			ssao_sharpness,
 			ssao_direct_light_affect,
 			ssao_ao_channel_affect);
-}
-
-void Environment::set_hbao_enabled(bool p_enabled) {
-	hbao_enabled = p_enabled;
-}
-
-bool Environment::is_hbao_enabled() const {
-	return hbao_enabled;
 }
 
 // SSIL
@@ -1179,16 +1163,14 @@ void Environment::_validate_property(PropertyInfo &p_property) const {
 		p_property.usage = PROPERTY_USAGE_NO_EDITOR;
 	}
 
-	if (ao_mode != AO_SSAO && (p_property.name == "ssao_enabled" ||
-							   p_property.name == "ssao_radius" ||
-							   p_property.name == "ssao_intensity" ||
-							   p_property.name == "ssao_power" ||
-							   p_property.name == "ssao_detail"||
-							   p_property.name == "ssao_horizon"||
-							   p_property.name == "ssao_horizon"||
-							   p_property.name == "ssao_sharpness"||
-							   p_property.name == "ssao_light_affect"||
-							   p_property.name == "ssao_ao_channel_affect"
+	if (ao_mode != AO_SSAO && (p_property.name == "ao_ssao_radius" ||
+							   p_property.name == "ao_ssao_intensity" ||
+							   p_property.name == "ao_ssao_power" ||
+							   p_property.name == "ao_ssao_detail"||
+							   p_property.name == "ao_ssao_horizon"||
+							   p_property.name == "ao_ssao_sharpness"||
+							   p_property.name == "ao_ssao_light_affect"||
+							   p_property.name == "ao_ssao_ao_channel_affect"
 							   )) {
 		p_property.usage = PROPERTY_USAGE_NO_EDITOR;
 	}
@@ -1200,7 +1182,6 @@ void Environment::_validate_property(PropertyInfo &p_property) const {
 		"fog_",
 		"volumetric_fog_",
 		"ssr_",
-		"ssao_",
 		"ssil_",
 		"sdfgi_",
 		"glow_",
@@ -1338,12 +1319,7 @@ void Environment::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_ao", "mode"), &Environment::set_ao);
 	ClassDB::bind_method(D_METHOD("get_ao"), &Environment::get_ao);
 
-	ADD_GROUP("AO", "ao_");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "ao_mode", PROPERTY_HINT_ENUM, "NONE,SSAO,HBAO"), "set_ao", "get_ao");
-
 	// SSAO
-	//ClassDB::bind_method(D_METHOD("set_ssao_enabled", "enabled"), &Environment::set_ssao_enabled);
-	//ClassDB::bind_method(D_METHOD("is_ssao_enabled"), &Environment::is_ssao_enabled);
 	ClassDB::bind_method(D_METHOD("set_ssao_radius", "radius"), &Environment::set_ssao_radius);
 	ClassDB::bind_method(D_METHOD("get_ssao_radius"), &Environment::get_ssao_radius);
 	ClassDB::bind_method(D_METHOD("set_ssao_intensity", "intensity"), &Environment::set_ssao_intensity);
@@ -1361,23 +1337,16 @@ void Environment::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_ssao_ao_channel_affect", "amount"), &Environment::set_ssao_ao_channel_affect);
 	ClassDB::bind_method(D_METHOD("get_ssao_ao_channel_affect"), &Environment::get_ssao_ao_channel_affect);
 
-	//ADD_GROUP("SSAO", "ssao_");
-	//ADD_PROPERTY(PropertyInfo(Variant::BOOL, "ssao_enabled"), "set_ssao_enabled", "is_ssao_enabled");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ssao_radius", PROPERTY_HINT_RANGE, "0.01,16,0.01,or_greater"), "set_ssao_radius", "get_ssao_radius");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ssao_intensity", PROPERTY_HINT_RANGE, "0,16,0.01,or_greater"), "set_ssao_intensity", "get_ssao_intensity");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ssao_power", PROPERTY_HINT_EXP_EASING, "positive_only"), "set_ssao_power", "get_ssao_power");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ssao_detail", PROPERTY_HINT_RANGE, "0,5,0.01"), "set_ssao_detail", "get_ssao_detail");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ssao_horizon", PROPERTY_HINT_RANGE, "0,1,0.01"), "set_ssao_horizon", "get_ssao_horizon");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ssao_sharpness", PROPERTY_HINT_RANGE, "0,1,0.01"), "set_ssao_sharpness", "get_ssao_sharpness");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ssao_light_affect", PROPERTY_HINT_RANGE, "0.00,1,0.01"), "set_ssao_direct_light_affect", "get_ssao_direct_light_affect");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ssao_ao_channel_affect", PROPERTY_HINT_RANGE, "0.00,1,0.01"), "set_ssao_ao_channel_affect", "get_ssao_ao_channel_affect");
-
-	// HBAO
-	ClassDB::bind_method(D_METHOD("set_hbao_enabled", "enabled"), &Environment::set_hbao_enabled);
-	ClassDB::bind_method(D_METHOD("is_hbao_enabled"), &Environment::is_hbao_enabled);
-
-	//ADD_GROUP("HBAO", "hbao_");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "hbao_enabled"), "set_hbao_enabled", "is_hbao_enabled");
+	ADD_GROUP("AO", "ao_");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "ao_mode", PROPERTY_HINT_ENUM, "DISABLED,SSAO,HBAO"), "set_ao", "get_ao");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ao_ssao_radius", PROPERTY_HINT_RANGE, "0.01,16,0.01,or_greater"), "set_ssao_radius", "get_ssao_radius");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ao_ssao_intensity", PROPERTY_HINT_RANGE, "0,16,0.01,or_greater"), "set_ssao_intensity", "get_ssao_intensity");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ao_ssao_power", PROPERTY_HINT_EXP_EASING, "positive_only"), "set_ssao_power", "get_ssao_power");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ao_ssao_detail", PROPERTY_HINT_RANGE, "0,5,0.01"), "set_ssao_detail", "get_ssao_detail");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ao_ssao_horizon", PROPERTY_HINT_RANGE, "0,1,0.01"), "set_ssao_horizon", "get_ssao_horizon");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ao_ssao_sharpness", PROPERTY_HINT_RANGE, "0,1,0.01"), "set_ssao_sharpness", "get_ssao_sharpness");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ao_ssao_light_affect", PROPERTY_HINT_RANGE, "0.00,1,0.01"), "set_ssao_direct_light_affect", "get_ssao_direct_light_affect");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "ao_ssao_ao_channel_affect", PROPERTY_HINT_RANGE, "0.00,1,0.01"), "set_ssao_ao_channel_affect", "get_ssao_ao_channel_affect");
 
 	// SSIL
 	ClassDB::bind_method(D_METHOD("set_ssil_enabled", "enabled"), &Environment::set_ssil_enabled);
@@ -1643,6 +1612,10 @@ void Environment::_bind_methods() {
 	BIND_ENUM_CONSTANT(SDFGI_Y_SCALE_50_PERCENT);
 	BIND_ENUM_CONSTANT(SDFGI_Y_SCALE_75_PERCENT);
 	BIND_ENUM_CONSTANT(SDFGI_Y_SCALE_100_PERCENT);
+
+	BIND_ENUM_CONSTANT(AO_DISABLED);
+	BIND_ENUM_CONSTANT(AO_SSAO);
+	BIND_ENUM_CONSTANT(AO_HBAO);
 }
 
 Environment::Environment() {

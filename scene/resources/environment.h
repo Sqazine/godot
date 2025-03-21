@@ -90,7 +90,7 @@ public:
 
 	enum AOMode
 	{
-		AO_NONE,
+		AO_DISABLED,
 		AO_SSAO,
 		AO_HBAO,
 	};
@@ -132,10 +132,9 @@ private:
 	float ssr_depth_tolerance = 0.2;
 	void _update_ssr();
 
-	AOMode ao_mode = AO_NONE;
+	AOMode ao_mode = AO_DISABLED;
 
 	// SSAO
-	//bool ssao_enabled = false;
 	float ssao_radius = 1.0;
 	float ssao_intensity = 2.0;
 	float ssao_power = 1.5;
@@ -147,7 +146,6 @@ private:
 	void _update_ssao();
 
 	// HBAO
-	bool hbao_enabled = false;
 
 	// SSIL
 	bool ssil_enabled = false;
@@ -300,8 +298,6 @@ public:
 	AOMode get_ao();
 
 	// SSAO
-	//void set_ssao_enabled(bool p_enabled);
-	//bool is_ssao_enabled() const;
 	void set_ssao_radius(float p_radius);
 	float get_ssao_radius() const;
 	void set_ssao_intensity(float p_intensity);
@@ -318,10 +314,6 @@ public:
 	float get_ssao_direct_light_affect() const;
 	void set_ssao_ao_channel_affect(float p_ao_channel_affect);
 	float get_ssao_ao_channel_affect() const;
-
-	// HBAO
-	void set_hbao_enabled(bool p_enabled);
-	bool is_hbao_enabled() const;
 
 	// SSIL
 	void set_ssil_enabled(bool p_enabled);
