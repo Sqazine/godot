@@ -57,7 +57,7 @@ constexpr double DEFAULT_CONTACT_MAX_SEPARATION = 0.05;
 constexpr double DEFAULT_CONTACT_MAX_ALLOWED_PENETRATION = 0.01;
 constexpr double DEFAULT_CONTACT_DEFAULT_BIAS = 0.8;
 constexpr double DEFAULT_SLEEP_THRESHOLD_LINEAR = 0.1;
-constexpr double DEFAULT_SLEEP_THRESHOLD_ANGULAR = 8.0 * Math_PI / 180;
+constexpr double DEFAULT_SLEEP_THRESHOLD_ANGULAR = 8.0 * Math::PI / 180;
 constexpr double DEFAULT_SOLVER_ITERATIONS = 8;
 
 } // namespace
@@ -122,7 +122,7 @@ JoltSpace3D::JoltSpace3D(JPH::JobSystem *p_job_system) :
 	physics_system->SetSoftBodyContactListener(contact_listener);
 
 	physics_system->SetCombineFriction([](const JPH::Body &p_body1, const JPH::SubShapeID &p_sub_shape_id1, const JPH::Body &p_body2, const JPH::SubShapeID &p_sub_shape_id2) {
-		return ABS(MIN(p_body1.GetFriction(), p_body2.GetFriction()));
+		return Math::abs(MIN(p_body1.GetFriction(), p_body2.GetFriction()));
 	});
 
 	physics_system->SetCombineRestitution([](const JPH::Body &p_body1, const JPH::SubShapeID &p_sub_shape_id1, const JPH::Body &p_body2, const JPH::SubShapeID &p_sub_shape_id2) {
