@@ -81,3 +81,20 @@ void light_process_spot_vertex(uint idx, vec3 vertex, hvec3 eye_vec, hvec3 norma
 	light_compute_vertex(normal, light_rel_vec_norm, eye_vec, color, false, roughness,
 			diffuse_light, specular_light);
 }
+
+const float LUT_SIZE  = 64.0; // ltc_texture size
+const float LUT_SCALE = (LUT_SIZE - 1.0)/LUT_SIZE;
+const float LUT_BIAS  = 0.5/LUT_SIZE;
+
+const vec3 LightVertices[4] = vec3[](
+	vec3(-8.0f, 2.4f, -1.0f),
+	vec3(-8.0f, 2.4f,  1.0f),
+	vec3(-8.0f, 0.4f,  1.0f),
+	vec3(-8.0f, 0.4f, -1.0f)
+);
+
+void light_process_area_vertex(uint idx, vec3 vertex, hvec3 eye_vec, hvec3 normal, half roughness,
+		inout hvec3 diffuse_light,
+		inout hvec3 specular_light) {
+	//
+}

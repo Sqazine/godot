@@ -174,12 +174,15 @@ private:
 	uint32_t max_lights;
 	uint32_t omni_light_count = 0;
 	uint32_t spot_light_count = 0;
+	uint32_t area_light_count = 0;
 	LightData *omni_lights = nullptr;
 	LightData *spot_lights = nullptr;
+	LightData *area_lights = nullptr;
 	LightInstanceDepthSort *omni_light_sort = nullptr;
 	LightInstanceDepthSort *spot_light_sort = nullptr;
 	RID omni_light_buffer;
 	RID spot_light_buffer;
+	RID area_light_buffer;
 
 	/* DIRECTIONAL LIGHT DATA */
 
@@ -478,6 +481,9 @@ public:
 
 	virtual RID spot_light_allocate() override;
 	virtual void spot_light_initialize(RID p_light) override;
+
+	virtual RID area_light_allocate() override;
+	virtual void area_light_initialize(RID p_light) override;
 
 	virtual void light_free(RID p_rid) override;
 
@@ -805,6 +811,7 @@ public:
 	void set_max_lights(const uint32_t p_max_lights);
 	RID get_omni_light_buffer() { return omni_light_buffer; }
 	RID get_spot_light_buffer() { return spot_light_buffer; }
+	RID get_area_light_buffer() { return area_light_buffer; }
 	RID get_directional_light_buffer() { return directional_light_buffer; }
 	uint32_t get_max_directional_lights() { return max_directional_lights; }
 	uint32_t get_directional_light_blend_splits(uint32_t p_directional_light_count) const {

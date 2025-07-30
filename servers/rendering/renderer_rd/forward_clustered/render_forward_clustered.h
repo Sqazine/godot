@@ -188,6 +188,15 @@ private:
 		RID texture;
 	} dfg_lut;
 
+	struct LtcMatrix
+	{
+		IntegrateDfgShaderRD shader;
+		RID shader_version;
+		RID pipeline;
+		RID ltc1_texture;
+		RID ltc2_texture;
+	}ltc_matrix;
+
 	enum PassMode {
 		PASS_MODE_COLOR,
 		PASS_MODE_SHADOW,

@@ -112,6 +112,15 @@ void LightStorage::spot_light_initialize(RID p_rid) {
 	_light_initialize(p_rid, RS::LIGHT_SPOT);
 }
 
+RID LightStorage::area_light_allocate() {
+	return light_owner.allocate_rid();
+}
+
+void LightStorage::area_light_initialize(RID p_rid) {
+	_light_initialize(p_rid, RS::LIGHT_AREA);
+}
+
+
 void LightStorage::light_free(RID p_rid) {
 	light_set_projector(p_rid, RID()); //clear projector
 
