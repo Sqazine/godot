@@ -169,6 +169,14 @@ void LightStorage::spot_light_initialize(RID p_light) {
 	_light_initialize(p_light, RS::LIGHT_SPOT);
 }
 
+RID LightStorage::area_light_allocate() {
+	return light_owner.allocate_rid();
+}
+
+void LightStorage::area_light_initialize(RID p_light) {
+	_light_initialize(p_light, RS::LIGHT_AREA);
+}
+
 void LightStorage::light_free(RID p_rid) {
 	light_set_projector(p_rid, RID()); //clear projector
 
@@ -553,6 +561,11 @@ void LightStorage::free_light_data() {
 		spot_light_buffer = RID();
 	}
 
+	if (area_light_buffer.is_valid()) {
+		RD::get_singleton()->free(area_light_buffer);
+		area_light_buffer = RID();
+	}
+
 	if (directional_lights != nullptr) {
 		memdelete_arr(directional_lights);
 		directional_lights = nullptr;
@@ -589,6 +602,8 @@ void LightStorage::set_max_lights(const uint32_t p_max_lights) {
 	spot_lights = memnew_arr(LightData, max_lights);
 	spot_light_buffer = RD::get_singleton()->storage_buffer_create(light_buffer_size);
 	spot_light_sort = memnew_arr(LightInstanceDepthSort, max_lights);
+	area_lights = memnew_arr(LightData, max_lights);
+	area_light_buffer = RD::get_singleton()->storage_buffer_create(light_buffer_size);
 	//defines += "\n#define MAX_LIGHT_DATA_STRUCTS " + itos(max_lights) + "\n";
 
 	max_directional_lights = RendererSceneRender::MAX_DIRECTIONAL_LIGHTS;
@@ -1035,6 +1050,10 @@ void LightStorage::update_light_buffers(RenderDataRD *p_render_data, const Paged
 
 	if (spot_light_count) {
 		RD::get_singleton()->buffer_update(spot_light_buffer, 0, sizeof(LightData) * spot_light_count, spot_lights);
+	}
+
+	if (area_light_count) {
+		RD::get_singleton()->buffer_update(area_light_buffer, 0, sizeof(LightData) * area_light_count, area_lights);
 	}
 
 	if (r_directional_light_count) {

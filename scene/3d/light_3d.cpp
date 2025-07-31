@@ -459,6 +459,9 @@ Light3D::Light3D(RenderingServer::LightType p_type) {
 		case RS::LIGHT_SPOT:
 			light = RenderingServer::get_singleton()->spot_light_create();
 			break;
+		case RS::LIGHT_AREA:
+			light = RenderingServer::get_singleton()->area_light_create();
+			break;
 		default: {
 		};
 	}
@@ -678,6 +681,38 @@ void SpotLight3D::_bind_methods() {
 
 SpotLight3D::SpotLight3D() :
 		Light3D(RenderingServer::LIGHT_SPOT) {
+	// Decrease the default shadow bias to better suit most scenes.
+	set_param(PARAM_SHADOW_BIAS, 0.03);
+}
+
+PackedStringArray AreaLight3D::get_configuration_warnings() const {
+	PackedStringArray warnings = Light3D::get_configuration_warnings();
+
+	if (has_shadow() && get_param(PARAM_SPOT_ANGLE) >= 90.0) {
+		warnings.push_back(RTR("A AreaLight3D with an angle wider than 90 degrees cannot cast shadows."));
+	}
+
+	if (!has_shadow() && get_projector().is_valid()) {
+		warnings.push_back(RTR("Projector texture only works with shadows active."));
+	}
+
+	if (get_projector().is_valid() && (OS::get_singleton()->get_current_rendering_method() == "gl_compatibility" || OS::get_singleton()->get_current_rendering_method() == "dummy")) {
+		warnings.push_back(RTR("Projector textures are not supported when using the Compatibility renderer yet. Support will be added in a future release."));
+	}
+
+	return warnings;
+}
+
+void AreaLight3D::_bind_methods() {
+	ADD_GROUP("Area", "area_");
+	ADD_PROPERTYI(PropertyInfo(Variant::FLOAT, "area_range", PROPERTY_HINT_RANGE, "0,4096,0.001,or_greater,exp,suffix:m"), "set_param", "get_param", PARAM_RANGE);
+	ADD_PROPERTYI(PropertyInfo(Variant::FLOAT, "area_attenuation", PROPERTY_HINT_RANGE, "-10,10,0.01,or_greater,or_less"), "set_param", "get_param", PARAM_ATTENUATION);
+	ADD_PROPERTYI(PropertyInfo(Variant::FLOAT, "area_angle", PROPERTY_HINT_RANGE, "0,180,0.01,degrees"), "set_param", "get_param", PARAM_SPOT_ANGLE);
+	ADD_PROPERTYI(PropertyInfo(Variant::FLOAT, "area_angle_attenuation", PROPERTY_HINT_EXP_EASING, "attenuation"), "set_param", "get_param", PARAM_SPOT_ATTENUATION);
+}
+
+AreaLight3D::AreaLight3D() :
+		Light3D(RenderingServer::LIGHT_AREA) {
 	// Decrease the default shadow bias to better suit most scenes.
 	set_param(PARAM_SHADOW_BIAS, 0.03);
 }

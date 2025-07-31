@@ -29,6 +29,7 @@
 /**************************************************************************/
 
 #include "render_forward_clustered.h"
+#include "ltc_matrix.h"
 #include "core/config/project_settings.h"
 #include "servers/rendering/renderer_rd/environment/fog.h"
 #include "servers/rendering/renderer_rd/framebuffer_cache_rd.h"
@@ -3128,6 +3129,30 @@ void RenderForwardClustered::_update_render_base_uniform_set() {
 
 		{
 			RD::Uniform u;
+			u.binding = 17;
+			u.uniform_type = RD::UNIFORM_TYPE_STORAGE_BUFFER;
+			u.append_id(RendererRD::LightStorage::get_singleton()->get_area_light_buffer());
+			uniforms.push_back(u);
+		}
+
+		{
+			RD::Uniform u;
+			u.binding = 18;
+			u.uniform_type = RD::UNIFORM_TYPE_IMAGE;
+			u.append_id(ltc_matrix.ltc1_texture);
+			uniforms.push_back(u);
+		}
+
+		{
+			RD::Uniform u;
+			u.binding = 19;
+			u.uniform_type = RD::UNIFORM_TYPE_IMAGE;
+			u.append_id(ltc_matrix.ltc2_texture);
+			uniforms.push_back(u);
+		}
+
+		{
+			RD::Uniform u;
 			u.binding = 5;
 			u.uniform_type = RD::UNIFORM_TYPE_STORAGE_BUFFER;
 			u.append_id(RendererRD::LightStorage::get_singleton()->get_reflection_probe_buffer());
@@ -5031,6 +5056,52 @@ RenderForwardClustered::RenderForwardClustered() {
 		RD::get_singleton()->compute_list_dispatch_threads(compute_list, tformat.width, tformat.height, 1);
 		RD::get_singleton()->compute_list_end();
 	}
+
+	/*LTC Matrix*/
+	{
+		Vector<String> modes;
+		modes.push_back("\n");
+		ltc_matrix.shader.initialize(modes);
+		ltc_matrix.shader_version = ltc_matrix.shader.version_create();
+		ltc_matrix.pipeline = RD::get_singleton()->compute_pipeline_create(ltc_matrix.shader.version_get_shader(ltc_matrix.shader_version, 0));
+
+		RD::TextureFormat tformat;
+		tformat.format = RD::DATA_FORMAT_R32G32B32A32_SFLOAT;
+		tformat.width = 64;
+		tformat.height = 64;
+		tformat.usage_bits = RD::TEXTURE_USAGE_SAMPLING_BIT | RD::TEXTURE_USAGE_STORAGE_BIT;
+		tformat.texture_type = RD::TEXTURE_TYPE_2D;
+		ltc_matrix.ltc1_texture = RD::get_singleton()->texture_create(tformat, RD::TextureView());
+		ltc_matrix.ltc2_texture = RD::get_singleton()->texture_create(tformat, RD::TextureView());
+
+		RID shader = ltc_matrix.shader.version_get_shader(ltc_matrix.shader_version, 0);
+		ERR_FAIL_COND(shader.is_null());
+
+		Vector<RD::Uniform> uniforms;
+
+		{
+			RD::Uniform u;
+			u.binding = 0;
+			u.uniform_type = RD::UNIFORM_TYPE_IMAGE;
+			u.append_id(ltc_matrix.ltc1_texture);
+			uniforms.push_back(u);
+		}
+		{
+			RD::Uniform u;
+			u.binding = 1;
+			u.uniform_type = RD::UNIFORM_TYPE_IMAGE;
+			u.append_id(ltc_matrix.ltc2_texture);
+			uniforms.push_back(u);
+		}
+		RID uniform_set = RD::get_singleton()->uniform_set_create(uniforms, shader, 0);
+
+		RD::ComputeListID compute_list = RD::get_singleton()->compute_list_begin();
+		RD::get_singleton()->compute_list_bind_compute_pipeline(compute_list, ltc_matrix.pipeline);
+		RD::get_singleton()->compute_list_bind_uniform_set(compute_list, uniform_set, 0);
+		RD::get_singleton()->compute_list_dispatch_threads(compute_list, tformat.width, tformat.height, 1);
+		RD::get_singleton()->compute_list_end();
+	}
+
 
 	_update_shader_quality_settings();
 	_update_global_pipeline_data_requirements_from_project();
