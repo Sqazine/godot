@@ -29,7 +29,6 @@
 /**************************************************************************/
 
 #include "render_forward_clustered.h"
-#include "ltc_matrix.h"
 #include "core/config/project_settings.h"
 #include "servers/rendering/renderer_rd/environment/fog.h"
 #include "servers/rendering/renderer_rd/framebuffer_cache_rd.h"
@@ -5159,6 +5158,11 @@ RenderForwardClustered::~RenderForwardClustered() {
 	RD::get_singleton()->free(dfg_lut.pipeline);
 	RD::get_singleton()->free(dfg_lut.texture);
 	dfg_lut.shader.version_free(dfg_lut.shader_version);
+
+	RD::get_singleton()->free(ltc_matrix.pipeline);
+	RD::get_singleton()->free(ltc_matrix.ltc1_texture);
+	RD::get_singleton()->free(ltc_matrix.ltc2_texture);
+	ltc_matrix.shader.version_free(ltc_matrix.shader_version);
 
 	{
 		for (const RID &rid : scene_state.uniform_buffers) {
